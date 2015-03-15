@@ -125,6 +125,8 @@ public class BinarySearchTree<T extends Comparable<T>>
      * Adds the specified value to the binary search tree.
      *
      * @param A value.
+     *
+     * @throws NullPointerException if the argument is null.
      */
     public void add(T value) throws NullPointerException
     {
@@ -181,6 +183,18 @@ public class BinarySearchTree<T extends Comparable<T>>
      */
     public void clear()
     {
+        if (hasParent())
+        {
+            if (this == parent.left)
+            {
+                parent.left = null;
+            }
+            else
+            {
+                parent.right = null;
+            }
+        }
+
         parent = null;
         value = null;
         left = null;
@@ -271,70 +285,77 @@ public class BinarySearchTree<T extends Comparable<T>>
         {
             if (removedNode.hasLeft() && removedNode.hasRight())
             {
-                if (removedNode.hasParent())
-                {
-                    removedNode.right.parent = removedNode.parent;
-                }
-
-                BinarySearchTree<T> bottomLeft = removedNode.right.find(removedNode.right.getFirst());
+                // Updates the left child.
+                BinarySearchTree<T> bottomLeft = removedNode.right.getFirst();
 
                 removedNode.left.parent = bottomLeft;
                 bottomLeft.left = removedNode.left;
+
+                // Updates the right child.
+                if (removedNode.right.hasLeft())
+                {
+                    removedNode.right.left.parent = removedNode;
+                }
+
+                if (removedNode.right.hasRight())
+                {
+                    removedNode.right.right.parent = removedNode;
+                }
+
+                // Copies the right child over this one.
                 removedNode.value = removedNode.right.value;
                 removedNode.left = removedNode.right.left;
                 removedNode.right = removedNode.right.right;
             }
             else if (removedNode.hasLeft())
             {
-                if (removedNode.hasParent())
+                // Updates the left child.
+                if (removedNode.left.hasLeft())
                 {
-                    removedNode.left.parent = removedNode.parent;
+                    removedNode.left.left.parent = removedNode;
                 }
 
+                if (removedNode.left.hasRight())
+                {
+                    removedNode.left.right.parent = removedNode;
+                }
+
+                // Copies the left child over this one.
                 removedNode.value = removedNode.left.value;
                 removedNode.right = removedNode.left.right;
                 removedNode.left = removedNode.left.left;
             }
             else if (removedNode.hasRight())
             {
-                if (removedNode.hasParent())
+                // Updates the right child.
+                if (removedNode.right.hasLeft())
                 {
-                    removedNode.right.parent = removedNode.parent;
+                    removedNode.right.left.parent = removedNode;
                 }
 
+                if (removedNode.right.hasRight())
+                {
+                    removedNode.right.right.parent = removedNode;
+                }
+
+                // Copies the right child over this one.
                 removedNode.value = removedNode.right.value;
                 removedNode.left = removedNode.right.left;
                 removedNode.right = removedNode.right.right;
             }
             else
             {
-                // !!!!!!!!!!!!!!!!!!!
-                // THIS PART HAS A BUG
-                // !!!!!!!!!!!!!!!!!!!
-                
-                if (removedNode.hasParent())
-                {
-                    if (removedNode == removedNode.parent.left)
-                    {
-                        removedNode.parent.left = null;
-                    }
-                    else
-                    {
-                        removedNode.parent.right = null;
-                    }
-                }
-
                 removedNode.clear();
             }
         }
     }
 
     /**
-     * Gets the first element in the binary search tree.
+     * Gets the node which contains the smallest element in the binary search tree.
      *
-     * @return The first element in the binary search tree.
+     * @return The node which contains the smallest element in the binary search tree.
      */
-    public T getFirst()
+    public BinarySearchTree<T> getFirst()
     {
         BinarySearchTree<T> firstNode = this;
 
@@ -343,15 +364,15 @@ public class BinarySearchTree<T extends Comparable<T>>
             firstNode = firstNode.left;
         }
 
-        return firstNode.value;
+        return firstNode;
     }
 
     /**
-     * Gets the last element in the binary search tree.
+     * Gets the node which contains the greatest element in the binary search tree.
      *
-     * @return The last element in the binary search tree.
+     * @return The node which contains the greatest element in the binary search tree.
      */
-    public T getLast()
+    public BinarySearchTree<T> getLast()
     {
         BinarySearchTree<T> lastNode = this;
 
@@ -360,7 +381,24 @@ public class BinarySearchTree<T extends Comparable<T>>
             lastNode = lastNode.right;
         }
 
-        return lastNode.value;
+        return lastNode;
+    }
+
+    /**
+     * Gets the root of the binary search tree.
+     *
+     * @return The root of the binary search tree.
+     */
+    public BinarySearchTree<T> getRoot()
+    {
+        BinarySearchTree<T> root = this;
+
+        while (root.hasParent())
+        {
+            root = root.parent;
+        }
+
+        return root;
     }
 
     /**
@@ -370,7 +408,7 @@ public class BinarySearchTree<T extends Comparable<T>>
      */
     public int getDepth()
     {
-        if (isEmpty() || (!hasLeft() && !hasRight()))
+        if (isEmpty() || !hasLeft() && !hasRight())
         {
             return 0;
         }
