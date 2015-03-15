@@ -8,191 +8,472 @@ import java.util.List;
  */
 public class BinarySearchTree<T extends Comparable<T>>
 {
-	// Represents the parent of this node.
-	private final BinarySearchTree<T> parent;
+    // Represents the parent of this node.
+    private BinarySearchTree<T> parent;
 
-	// Represents the value stored by this node.
-	private T value;
+    // Represents the value stored by this node.
+    private T value;
 
-	// Represents the left child of this node.
-	private BinarySearchTree<T> left;
+    // Represents the left child of this node.
+    private BinarySearchTree<T> left;
 
-	// Represents the right child of this node.
-	private BinarySearchTree<T> right;
+    // Represents the right child of this node.
+    private BinarySearchTree<T> right;
 
-	/**
-	 * Constructs a binary search tree.
-	 */
-	public BinarySearchTree()
-	{
-		parent = null;
-		value = null;
-	}
+    /**
+     * Constructs a binary search tree.
+     */
+    public BinarySearchTree()
+    {
+        parent = null;
+        value = null;
+    }
 
-	/**
-	 * Constructs a node.
-	 */
-	private BinarySearchTree(BinarySearchTree<T> parent, T value)
-	{
-		this.parent = parent;
-		this.value = value;
-	}
+    /**
+     * Constructs a node.
+     *
+     * @param The parent of the node.
+     * @param A value.
+     */
+    private BinarySearchTree(BinarySearchTree<T> parent, T value)
+    {
+        this.parent = parent;
+        this.value = value;
+    }
 
-	/**
-	 * Gets the value stored by this node.
-	 *
-	 * @return The value stored by this node.
-	 */
-	public T getValue()
-	{
-		return value;
-	}
+    /**
+     * Gets the value stored by this node.
+     *
+     * @return The value stored by this node.
+     */
+    public T getValue()
+    {
+        return value;
+    }
 
-	/**
-	 * Gets the parent of this node.
-	 *
-	 * @return The parent of this node.
-	 */
-	public BinarySearchTree<T> getParent()
-	{
-		return parent;
-	}
+    /**
+     * Gets the parent of this node.
+     *
+     * @return The parent of this node.
+     */
+    public BinarySearchTree<T> getParent()
+    {
+        return parent;
+    }
 
-	/**
-	 * Gets the left child of this node.
-	 *
-	 * @return The left child of this node.
-	 */
-	public BinarySearchTree<T> getLeft()
-	{
-		return left;
-	}
+    /**
+     * Gets the left child of this node.
+     *
+     * @return The left child of this node.
+     */
+    public BinarySearchTree<T> getLeft()
+    {
+        return left;
+    }
 
-	/**
-	 * Gets the right child of this node.
-	 *
-	 * @return The right child of this node.
-	 */
-	public BinarySearchTree<T> getRight()
-	{
-		return right;
-	}
+    /**
+     * Gets the right child of this node.
+     *
+     * @return The right child of this node.
+     */
+    public BinarySearchTree<T> getRight()
+    {
+        return right;
+    }
 
-	/**
-	 * Determines whether this node has a parent.
-	 *
-	 * @return True if this node has a parent.
-	 */
-	public boolean hasParent()
-	{
-		return parent != null;
-	}
+    /**
+     * Determines whether this binary search tree is empty.
+     *
+     * @return True if this binary search tree is empty.
+     */
+    public boolean isEmpty()
+    {
+        return value == null;
+    }
 
-	/**
-	 * Determines whether this node has a left child.
-	 *
-	 * @return True if this node has a left child.
-	 */
-	public boolean hasLeft()
-	{
-		return left != null;
-	}
+    /**
+     * Determines whether this node has a parent.
+     *
+     * @return True if this node has a parent.
+     */
+    public boolean hasParent()
+    {
+        return parent != null;
+    }
 
-	/**
-	 * Determines whether this node has a right child.
-	 *
-	 * @return True if this node has a right child.
-	 */
-	public boolean hasRight()
-	{
-		return right != null;
-	}
+    /**
+     * Determines whether this node has a left child.
+     *
+     * @return True if this node has a left child.
+     */
+    public boolean hasLeft()
+    {
+        return left != null;
+    }
 
-	/**
-	 * Adds the specified value to the binary search tree.
-	 *
-	 * @param A value.
-	 */
-	public void add(T value)
-	{
+    /**
+     * Determines whether this node has a right child.
+     *
+     * @return True if this node has a right child.
+     */
+    public boolean hasRight()
+    {
+        return right != null;
+    }
 
-	}
+    /**
+     * Adds the specified value to the binary search tree.
+     *
+     * @param A value.
+     */
+    public void add(T value) throws NullPointerException
+    {
+        BinarySearchTree<T> currentNode = this;
 
-	/**
-	 * Removes all elements from the binary search tree.
-	 */
-	public void clear()
-	{
-		value = null;
-		left = null;
-		right = null;
-	}
+        if (value == null)
+        {
+            throw new NullPointerException();
+        }
+        else if (isEmpty())
+        {
+            currentNode.value = value;
+        }
+        else
+        {
+            while (true)
+            { 
+                if (value.compareTo(currentNode.value) <= 0)
+                {
+                    if (currentNode.hasLeft())
+                    {
+                        // Advances to the left child.
+                        currentNode = currentNode.left;
+                    }
+                    else
+                    {
+                        // Stores this value as the left child.
+                        currentNode.left = new BinarySearchTree<T>(currentNode, value);
 
-	/**
-	 * Gets the node associated with the specified value.
-	 *
-	 * @param A value.
-	 *
-	 * @return The node associated with the specified value.
-	 */
-	public BinarySearchTree<T> get(T value)
-	{
-		return null;
-	}
+                        return;
+                    }
+                }
+                else
+                {
+                    if (currentNode.hasRight())
+                    {
+                        // Advances to the right child.
+                        currentNode = currentNode.right;
+                    }
+                    else
+                    {
+                        // Stores this value as the right child.
+                        currentNode.right = new BinarySearchTree<T>(currentNode, value);
 
-	/**
-	 * Removes the specified value from the binary search tree.
-	 *
-	 * @param A value.
-	 */
-	public void remove(T value)
-	{
+                        return;
+                    }
+                }
+            }
+        }
+    }
 
-	}
+    /**
+     * Removes all nodes from the binary search tree.
+     */
+    public void clear()
+    {
+        parent = null;
+        value = null;
+        left = null;
+        right = null;
+    }
 
-	/**
-	 * Gets the first element in the binary search tree.
-	 *
-	 * @return The first element in the binary search tree.
-	 */
-	public BinarySearchTree<T> getFirst()
-	{
-		return null;
-	}
+    /**
+     * Determines whether the specified value is in the binary search tree.
+     *
+     * @param A value.
+     *
+     * @return True if the specified value is in the binary search tree.
+     */
+    public boolean contains(T value)
+    {
+        return find(value) != null;
+    }
 
-	/**
-	 * Gets the last element in the binary search tree.
-	 *
-	 * @return The last element in the binary search tree.
-	 */
-	public BinarySearchTree<T> getLast()
-	{
-		return null;
-	}
+    /**
+     * Finds the node associated with the specified value.
+     *
+     * @param A value.
+     *
+     * @return The node associated with the specified value.
+     */
+    public BinarySearchTree<T> find(T value)
+    {
+        BinarySearchTree<T> currentNode = this;
 
-	/**
-	 * Gets the number of elements in the binary search tree.
-	 *
-	 * @return The number of elements in the binary search tree.
-	 */
-	public int size()
-	{
-		return 0;
-	}
+        if (isEmpty())
+        {
+            // There are no values in this binary search tree.
+            return null;
+        }
+        else if (value == null)
+        {
+            return null;
+        }
+        else
+        {
+            while (true)
+            {
+                if (value.compareTo(currentNode.value) < 0)
+                {
+                    if (currentNode.hasLeft())
+                    {
+                        // Advances to the left child.
+                        currentNode = currentNode.left;
+                    }
+                    else
+                    {
+                        // The binary search tree does not contain the specified value.
+                        return null;
+                    }
+                }
+                else if (value.compareTo(currentNode.value) == 0)
+                {
+                    // The node which stores this value has been found.
+                    return currentNode;
+                }
+                else
+                {
+                    if (currentNode.hasRight())
+                    {
+                        // Advances to the right child.
+                        currentNode = currentNode.right;
+                    }
+                    else
+                    {
+                        // The binary search tree does not contain the specified value.
+                        return null;
+                    }
+                }
+            }
+        }
+    }
 
-	/**
-	 * Gets the list representation of the binary search tree.
-	 *
-	 * @return The list representation of the binary search tree.
-	 */
-	public List<T> toList()
-	{
-		return null;
-	}
+    /**
+     * Removes the specified value from the binary search tree.
+     *
+     * @param A value.
+     */
+    public void remove(T value)
+    {
+        BinarySearchTree<T> removedNode = find(value);
 
-	@Override
-	public String toString()
-	{
-		return "";
-	}
+        if (removedNode != null)
+        {
+            if (removedNode.hasLeft() && removedNode.hasRight())
+            {
+                if (removedNode.hasParent())
+                {
+                    removedNode.right.parent = removedNode.parent;
+                }
+
+                BinarySearchTree<T> bottomLeft = removedNode.right.find(removedNode.right.getFirst());
+
+                removedNode.left.parent = bottomLeft;
+                bottomLeft.left = removedNode.left;
+                removedNode.value = removedNode.right.value;
+                removedNode.left = removedNode.right.left;
+                removedNode.right = removedNode.right.right;
+            }
+            else if (removedNode.hasLeft())
+            {
+                if (removedNode.hasParent())
+                {
+                    removedNode.left.parent = removedNode.parent;
+                }
+
+                removedNode.value = removedNode.left.value;
+                removedNode.right = removedNode.left.right;
+                removedNode.left = removedNode.left.left;
+            }
+            else if (removedNode.hasRight())
+            {
+                if (removedNode.hasParent())
+                {
+                    removedNode.right.parent = removedNode.parent;
+                }
+
+                removedNode.value = removedNode.right.value;
+                removedNode.left = removedNode.right.left;
+                removedNode.right = removedNode.right.right;
+            }
+            else
+            {
+                // !!!!!!!!!!!!!!!!!!!
+                // THIS PART HAS A BUG
+                // !!!!!!!!!!!!!!!!!!!
+                
+                if (removedNode.hasParent())
+                {
+                    if (removedNode == removedNode.parent.left)
+                    {
+                        removedNode.parent.left = null;
+                    }
+                    else
+                    {
+                        removedNode.parent.right = null;
+                    }
+                }
+
+                removedNode.clear();
+            }
+        }
+    }
+
+    /**
+     * Gets the first element in the binary search tree.
+     *
+     * @return The first element in the binary search tree.
+     */
+    public T getFirst()
+    {
+        BinarySearchTree<T> firstNode = this;
+
+        while (firstNode.hasLeft())
+        {
+            firstNode = firstNode.left;
+        }
+
+        return firstNode.value;
+    }
+
+    /**
+     * Gets the last element in the binary search tree.
+     *
+     * @return The last element in the binary search tree.
+     */
+    public T getLast()
+    {
+        BinarySearchTree<T> lastNode = this;
+
+        while (lastNode.hasRight())
+        {
+            lastNode = lastNode.right;
+        }
+
+        return lastNode.value;
+    }
+
+    /**
+     * Gets the depth of the binary search tree.
+     *
+     * @return The depth of the binary search tree.
+     */
+    public int getDepth()
+    {
+        if (isEmpty() || (!hasLeft() && !hasRight()))
+        {
+            return 0;
+        }
+        else
+        {
+            int depthLeft = 0;
+            int depthRight = 0;
+
+            if (hasLeft())
+            {
+                depthLeft += 1 + left.getDepth();
+            }
+
+            if (hasRight())
+            {
+                depthRight += 1 + right.getDepth();
+            }
+
+            return Math.max(depthLeft, depthRight);
+        }
+    }
+
+    /**
+     * Gets the number of elements in the binary search tree.
+     *
+     * @return The number of elements in the binary search tree.
+     */
+    public int size()
+    {
+        if (isEmpty())
+        {
+            return 0;
+        }
+        else
+        {
+            int size = 1;
+
+            if (hasLeft())
+            {
+                size += left.size();
+            }
+
+            if (hasRight())
+            {
+                size += right.size();
+            }
+
+            return size;
+        }
+    }
+
+    /**
+     * Gets the list representation of the binary search tree.
+     *
+     * @return The list representation of the binary search tree.
+     */
+    public List<T> toList()
+    {
+        ArrayList<T> list = new ArrayList<T>();
+
+        if (!isEmpty())
+        {
+            list.add(value);
+        }
+
+        if (hasLeft())
+        {
+            list.addAll(left.toList());
+        }
+
+        if (hasRight())
+        {
+            list.addAll(right.toList());
+        }
+
+        return list;
+    }
+
+    @Override
+    public String toString()
+    {
+        if (!isEmpty())
+        {
+            if (hasLeft() && hasRight())
+            {
+                return String.format("%s(%s, %s)", value, left, right);
+            }
+            else if (hasLeft())
+            {
+                return String.format("%s(%s, -)", value, left);
+            }
+            else if (hasRight())
+            {
+                return String.format("%s(-, %s)", value, right);
+            }
+            else
+            {
+                return String.format("%s", value);
+            }
+        }
+        else
+        {
+            return "";
+        }
+    }
 }
