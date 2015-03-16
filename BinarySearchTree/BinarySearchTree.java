@@ -33,7 +33,7 @@ public class BinarySearchTree<T extends Comparable<T>>
      * Constructs a node.
      *
      * @param parent The parent of the node.
-     * @param A value.
+     * @param value A value.
      */
     private BinarySearchTree(BinarySearchTree<T> parent, T value)
     {
