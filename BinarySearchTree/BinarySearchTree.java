@@ -32,7 +32,7 @@ public class BinarySearchTree<T extends Comparable<T>>
     /**
      * Constructs a node.
      *
-     * @param The parent of the node.
+     * @param parent The parent of the node.
      * @param A value.
      */
     private BinarySearchTree(BinarySearchTree<T> parent, T value)
@@ -124,7 +124,7 @@ public class BinarySearchTree<T extends Comparable<T>>
     /**
      * Adds the specified value to the binary search tree.
      *
-     * @param A value.
+     * @param value A value.
      *
      * @throws NullPointerException if the argument is null.
      */
@@ -204,7 +204,7 @@ public class BinarySearchTree<T extends Comparable<T>>
     /**
      * Determines whether the specified value is in the binary search tree.
      *
-     * @param A value.
+     * @param value A value.
      *
      * @return True if the specified value is in the binary search tree.
      */
@@ -216,7 +216,7 @@ public class BinarySearchTree<T extends Comparable<T>>
     /**
      * Finds the node associated with the specified value.
      *
-     * @param A value.
+     * @param value A value.
      *
      * @return The node associated with the specified value.
      */
@@ -275,7 +275,7 @@ public class BinarySearchTree<T extends Comparable<T>>
     /**
      * Removes the specified value from the binary search tree.
      *
-     * @param A value.
+     * @param value A value.
      */
     public void remove(T value)
     {
