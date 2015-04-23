@@ -436,7 +436,7 @@ public class BinarySearchTree<T extends Comparable<T>>
      *
      * @return The number of elements in the binary search tree.
      */
-    public int size()
+    public int getSize()
     {
         if (isEmpty())
         {
@@ -448,12 +448,12 @@ public class BinarySearchTree<T extends Comparable<T>>
 
             if (hasLeft())
             {
-                size += left.size();
+                size += left.getSize();
             }
 
             if (hasRight())
             {
-                size += right.size();
+                size += right.getSize();
             }
 
             return size;
@@ -467,7 +467,7 @@ public class BinarySearchTree<T extends Comparable<T>>
      */
     public List<T> toList()
     {
-        ArrayList<T> list = new ArrayList<T>();
+        List<T> list = new ArrayList<T>();
 
         if (!isEmpty())
         {
